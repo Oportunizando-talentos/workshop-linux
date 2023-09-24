@@ -1,0 +1,9 @@
+Package: pipeLog
+Version:0.0.1
+Name: pipeLog
+Description: utilitário para realizar teste com redirecionamento de arquivo em aulas
+Author: Julio de Souza Novaes juliomega10@gmail.com
+Architecture: all
+Essential: no
+Priority : optional
+Maintainer: juliomega10@gmail.com
