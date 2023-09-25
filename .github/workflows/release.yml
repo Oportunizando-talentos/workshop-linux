@@ -1,46 +1,28 @@
-name: Release Go
+name: Create the DEB
+
+permissions:
+  contents: write
 
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
-  build:
+  Create_Packages:
+    name: Create Package
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
         with:
-          go-version: 1.20
+          path: "REPO"
 
-      - name: Build
-        run: go build -o pipeLog
+      - name: Copy script files around to stop .github from being added to the package then build the package
+        run: |
+          dpkg-deb --build ./pipeLog_0_0_amd64/ 
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release the Package
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Release notes go here.
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./pipeLog
-          asset_name: pipeLog
-          asset_content_type: application/octet-stream
-
+          files: pipeLog_0_0_amd64.deb.deb
