@@ -38,7 +38,8 @@ jobs:
 
       - name: Copy script files around to stop .github from being added to the package then build the package
         run: |
-          dpkg-deb --build ./pipeLog_0_0_amd64/ 
+          ls
+          dpkg-deb --build pipeLog_0_0_amd64
 
       - name: Release the Package
         uses: softprops/action-gh-release@v1
