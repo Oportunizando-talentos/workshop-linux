@@ -23,7 +23,7 @@ func main() {
 	fmt.Println("PID", getppid)
 	fmt.Println("Hostname", name)
 
-	//time.Sleep(time.Minute * 5)
+	time.Sleep(time.Minute * 5)
 	log.Fatalln("saindo")
 
 }
